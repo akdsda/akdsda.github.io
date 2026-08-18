@@ -148,7 +148,8 @@
   .section-head { margin-bottom: 44px; }
   .section-kicker { font-size: 0.86rem; font-weight: 700; color: var(--accent); margin-bottom: 12px; }
   .section-head h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); }
-  .section-head p.sub { color: var(--ink-soft); margin-top: 14px; max-width: 620px; font-size: 1.05rem; }
+  .section-head p.sub { color: var(--ink-soft); margin-top: 14px; font-size: 1.05rem; white-space: nowrap; }
+  @media (max-width: 960px) { .section-head p.sub { white-space: normal; max-width: 620px; } }
 
   /* ---------- About ---------- */
   .about-body p { font-size: 1.1rem; line-height: 1.7; color: var(--ink-soft); max-width: 680px; }
