@@ -23,6 +23,8 @@
     --accent-tint: rgba(37, 84, 224, 0.08);
     --accent-2: #12905a;
     --accent-2-tint: rgba(18, 144, 90, 0.1);
+    --warn: #b5730a;
+    --warn-tint: rgba(181, 115, 10, 0.1);
     --shadow: 0 1px 2px rgba(20, 23, 28, 0.04), 0 14px 34px -18px rgba(20, 23, 28, 0.12);
     --shadow-hover: 0 4px 10px rgba(20, 23, 28, 0.06), 0 22px 46px -18px rgba(20, 23, 28, 0.18);
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -43,6 +45,8 @@
       --accent-tint: rgba(124, 154, 255, 0.14);
       --accent-2: #3ecf8e;
       --accent-2-tint: rgba(62, 207, 142, 0.14);
+      --warn: #e5a74a;
+      --warn-tint: rgba(229, 167, 74, 0.14);
       --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 40px -16px rgba(0, 0, 0, 0.65);
       --shadow-hover: 0 4px 14px rgba(0, 0, 0, 0.5), 0 26px 54px -16px rgba(0, 0, 0, 0.7);
     }
@@ -61,6 +65,8 @@
     --accent-tint: rgba(124, 154, 255, 0.14);
     --accent-2: #3ecf8e;
     --accent-2-tint: rgba(62, 207, 142, 0.14);
+    --warn: #e5a74a;
+    --warn-tint: rgba(229, 167, 74, 0.14);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 18px 40px -16px rgba(0, 0, 0, 0.65);
     --shadow-hover: 0 4px 14px rgba(0, 0, 0, 0.5), 0 26px 54px -16px rgba(0, 0, 0, 0.7);
   }
@@ -80,6 +86,7 @@
 
   #page[data-lang="ko"] .t-en { display: none; }
   #page[data-lang="en"] .t-ko { display: none; }
+  #page[data-lang="ko"] { word-break: keep-all; overflow-wrap: break-word; }
 
   a { color: var(--accent); text-decoration-color: var(--line); }
   a:hover { color: var(--accent-strong); text-decoration-color: currentColor; }
@@ -235,6 +242,92 @@
   .outcome-chip-row { display: flex; flex-wrap: wrap; gap: 10px; border-top: 1px solid var(--line); padding-top: 24px; }
   .outcome-chip { font-size: 0.88rem; font-weight: 600; color: var(--accent-strong); background: var(--accent-tint); border-radius: 8px; padding: 8px 13px; }
 
+  /* ---------- Stage 6 detail blocks: flow, policy cards, answer mock, decisions ---------- */
+  .stage-sub { font-size: 1.12rem; font-weight: 800; margin: 44px 0 16px; padding-top: 30px; border-top: 1px solid var(--line); }
+  .stage-sub-note { margin: -8px 0 18px; font-size: 0.92rem; color: var(--muted); line-height: 1.6; }
+  .principle { margin: 0 0 26px; padding: 16px 20px; border-left: 3px solid var(--accent); background: var(--accent-tint); border-radius: 0 12px 12px 0; color: var(--ink); font-size: 1rem; line-height: 1.65; }
+  .principle b { color: var(--accent-strong); }
+
+  .actor { display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--paper-raised); color: var(--ink-soft); white-space: nowrap; }
+  .actor.llm { background: var(--accent-tint); border-color: transparent; color: var(--accent-strong); }
+  .actor-or { font-size: 0.74rem; color: var(--muted); }
+  .flow-legend { display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 0.84rem; color: var(--muted); padding-bottom: 18px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+  .flow-legend > span { display: inline-flex; align-items: center; gap: 9px; }
+
+  .flow { list-style: none; margin: 0; padding: 0; }
+  .flow-step { position: relative; display: grid; grid-template-columns: 34px minmax(170px, 230px) 1fr; column-gap: 18px; padding-bottom: 22px; }
+  .flow-step::before { content: ""; position: absolute; left: 16px; top: 38px; bottom: 4px; width: 2px; background: var(--line); }
+  .flow-step:last-child { padding-bottom: 0; }
+  .flow-step:last-child::before { display: none; }
+  .flow-num { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--accent); background: var(--paper-raised); color: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.84rem; font-weight: 700; }
+  .flow-head { padding-top: 5px; }
+  .flow-head h5, .policy-card h5 { margin: 0 0 7px; font-size: 0.98rem; font-weight: 700; color: var(--ink); line-height: 1.4; }
+  .flow-head .actors { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .flow-body { padding-top: 5px; }
+  .flow-body p { margin: 0; font-size: 0.94rem; line-height: 1.65; color: var(--ink-soft); }
+  .flow-note { display: flex; align-items: baseline; gap: 10px; margin-top: 8px; padding: 7px 12px; border-radius: 8px; font-size: 0.86rem; line-height: 1.55; color: var(--ink-soft); }
+  .flow-note .ico { flex-shrink: 0; font-size: 0.78rem; font-weight: 800; }
+  .flow-note.policy { background: var(--accent-2-tint); }
+  .flow-note.policy .ico { color: var(--accent-2); }
+  .flow-note.loop, .flow-note.exit { background: var(--warn-tint); }
+  .flow-note.loop .ico, .flow-note.exit .ico { color: var(--warn); font-size: 0.95rem; }
+  @media (max-width: 760px) {
+    .flow-step { grid-template-columns: 34px 1fr; row-gap: 4px; }
+    .flow-body { grid-column: 2; padding-top: 0; }
+  }
+  @media (max-width: 640px) {
+    #stage-6 .flow-card { background: none; border: none; padding: 0; }
+    .flow-step { grid-template-columns: 30px 1fr; column-gap: 12px; padding: 0; }
+    .flow-step + .flow-step { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .flow-step::before { display: none; }
+    .flow-num { width: 30px; height: 30px; font-size: 0.8rem; }
+    .flow-head { padding-top: 3px; }
+    .flow-body { grid-column: 1 / -1; padding-top: 10px; }
+  }
+
+  .policy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin-bottom: 8px; }
+  .policy-card { background: var(--paper-alt); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px 20px; }
+  .policy-card .pnum { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700; color: var(--accent-2); }
+  .policy-card .ptop { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .policy-card .pstep { font-size: 0.72rem; font-weight: 600; color: var(--muted); }
+  .policy-card h5 { margin-top: 6px; }
+  .policy-card p { margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); }
+
+  .am-wrap { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 18px 28px; align-items: start; margin-bottom: 8px; }
+  @media (max-width: 900px) { .am-wrap { grid-template-columns: 1fr; } }
+  .answer-mock { border: 1px solid var(--line); border-radius: 16px; background: var(--paper-alt); padding: 20px 22px; }
+  .am-q { display: flex; justify-content: flex-end; margin-bottom: 16px; }
+  .am-q span { max-width: 85%; background: var(--accent); color: var(--paper); padding: 9px 14px; border-radius: 14px 14px 4px 14px; font-size: 0.92rem; line-height: 1.5; }
+  .am-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .am-badge { font-size: 0.76rem; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: var(--paper-raised); border: 1px solid var(--line); color: var(--ink-soft); }
+  .am-badge.basis { background: var(--warn-tint); border-color: transparent; color: var(--warn); }
+  .am-text { margin: 0 0 14px; font-size: 0.95rem; line-height: 1.75; color: var(--ink); }
+  .redact { display: inline-block; vertical-align: -0.15em; height: 1.05em; margin: 0 1px; border-radius: 3px; background: var(--ink-soft); opacity: 0.3; color: transparent; user-select: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .am-follow { display: flex; flex-wrap: wrap; gap: 8px; }
+  .am-follow span { font-size: 0.82rem; font-weight: 600; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 4px 12px; }
+  .am-reason { margin-top: 14px; font-size: 0.82rem; color: var(--muted); }
+  .stage-card ul.am-legend { list-style: none; margin: 2px 0 0; padding: 0; display: grid; gap: 14px; font-size: 0.88rem; line-height: 1.55; }
+  .stage-card ul.am-legend li { margin: 0; padding-left: 12px; border-left: 2px solid var(--line); }
+  .am-legend b { display: block; color: var(--ink); margin-bottom: 2px; }
+
+  .decision-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin: 0 0 30px; font-size: 0.92rem; }
+  .decision-table th { text-align: left; padding: 11px 18px; font-size: 0.78rem; font-weight: 700; color: var(--muted); background: var(--paper-alt); border-bottom: 1px solid var(--line); }
+  .decision-table td { vertical-align: top; width: 50%; padding: 14px 18px; line-height: 1.6; color: var(--ink-soft); border-bottom: 1px solid var(--line); }
+  .decision-table tr:last-child td { border-bottom: none; }
+  .decision-table td.obs { border-right: 1px solid var(--line); }
+  .decision-table td.dec { color: var(--ink); }
+  .decision-table td.dec b { color: var(--accent-2); }
+  .decision-table .m-label { display: none; }
+  @media (max-width: 760px) {
+    .decision-table thead { display: none; }
+    .decision-table, .decision-table tbody, .decision-table tr, .decision-table td { display: block; width: auto; }
+    .decision-table tr { border-bottom: 1px solid var(--line); }
+    .decision-table tr:last-child { border-bottom: none; }
+    .decision-table td, .decision-table tr:last-child td { border: none; padding: 12px 16px; }
+    .decision-table td.obs { padding-bottom: 4px; }
+    .decision-table .m-label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--muted); margin-bottom: 3px; }
+  }
+
   /* ---------- Screenshot gallery ---------- */
   .shot-gallery { margin: 4px 0 30px; }
   .shot-gallery-label { font-size: 0.8rem; font-weight: 700; color: var(--muted); display: block; margin-bottom: 12px; }
@@ -326,6 +419,8 @@
       --accent-tint: rgba(37, 84, 224, 0.08) !important;
       --accent-2: #12905a !important;
       --accent-2-tint: rgba(18, 144, 90, 0.1) !important;
+      --warn: #b5730a !important;
+      --warn-tint: rgba(181, 115, 10, 0.1) !important;
       --shadow: none !important;
       --shadow-hover: none !important;
     }
@@ -336,6 +431,9 @@
     section { padding: 22px 0; break-inside: avoid; }
     section + section { border-top: none; }
     .stage-card, .sec-card, .cert-card, .edu-card, .skill-card { box-shadow: none; break-inside: avoid; }
+    #stage-6 { break-inside: auto; }
+    .flow-step, .policy-card, .answer-mock, .decision-table tr, .stat-row { break-inside: avoid; }
+    .stage-sub { break-after: avoid; }
 
     /* Scroll-reveal elements default to opacity:0 until they enter the viewport;
        printing before scrolling through the whole page would leave these blank. */
@@ -1026,164 +1124,249 @@
           <div class="stage-eyebrow">
             <span class="stagecode">06 · ENABLE</span><span class="sep">&middot;</span>
             <span class="t-ko">2026.05–현재</span><span class="t-en">May 2026–Present</span><span class="sep">&middot;</span>
-            <span class="t-ko">한샘 · 개발 2명 · 기여도 70%</span><span class="t-en">Hanssem · 2 devs · 70% contribution</span><span class="sep">&middot;</span>
+            <span class="t-ko">한샘 · 개발 1명 · 기여도 100%</span><span class="t-en">Hanssem · 1 dev · 100% contribution</span><span class="sep">&middot;</span>
             <span class="status-pill"><span class="dot"></span><span class="t-ko">운영 중</span><span class="t-en">Ongoing</span></span>
           </div>
-          <h3><span class="t-ko">멀티도메인 Text-to-SQL AI 챗봇 데이터 아키텍처 구축</span><span class="t-en">Multi-Domain Text-to-SQL AI Chatbot Data Architecture</span></h3>
+          <h3><span class="t-ko">멀티도메인 Text-to-SQL AI 챗봇 데이터 아키텍처 구축 및 운영</span><span class="t-en">Multi-Domain Text-to-SQL AI Chatbot: Data Architecture &amp; Operations</span></h3>
           <p class="stage-problem">
-            <span class="t-ko">마케팅 등 유관부서가 여러 도메인의 데이터를 결합해 조회하려면 매번 데이터 요청을 거쳐야 했고, 응답까지 반나절에서 하루가 걸려 의사결정 속도가 느려졌습니다.</span>
-            <span class="t-en">Whenever marketing and other stakeholder teams needed to query across multiple data domains, they had to file a data request and wait half a day to a full day for a response, slowing down decision-making.</span>
+            <span class="t-ko">마케팅 등 유관부서는 여러 도메인의 데이터를 결합해 보려면 매번 데이터 요청을 거쳐 반나절~하루를 기다려야 했습니다. 그렇다고 SQL 작성을 LLM에 통째로 맡기면 비슷한 테이블 중 엉뚱한 것을 고르거나, 조회하지 않은 숫자를 지어내거나, 기간 같은 가정을 숨긴 채 답했습니다. 업무 판단에 쓰이는 숫자라면 틀린 답은 "모른다"보다 위험합니다.</span>
+            <span class="t-en">Marketing and other teams had to file a data request and wait half a day to a full day whenever they needed numbers that combined several domains. Handing SQL entirely to an LLM wasn't the fix either: it picked the wrong one among look-alike tables, cited numbers it never queried, and silently assumed date ranges. When numbers drive business decisions, a wrong answer is more dangerous than "I don't know."</span>
+          </p>
+          <p class="principle">
+            <span class="t-ko"><b>설계 원칙</b> — 정할 수 있는 것은 코드가 정하고, 표현이 다양해 규칙으로 못 덮는 판단만 LLM에 맡깁니다. 숫자는 실제 조회 결과에서만 나오고, 가정한 것은 반드시 답에 밝힙니다.</span>
+            <span class="t-en"><b>Design principle</b> — code decides everything that can be decided deterministically; the LLM handles only the judgment calls rules can't cover. Every number comes from an executed query, and every assumption is disclosed in the answer.</span>
           </p>
           <span class="approach-label t-ko">접근</span><span class="approach-label t-en">Approach</span>
           <ul class="t-ko">
-            <li>사용자 행동 로그·상담/광고·기획전·공공데이터 등 5개 도메인을 아우르는 통합 데이터 아키텍처 설계</li>
-            <li>자연어 질의를 SQL로 변환하는 Text-to-SQL AI 챗봇 구조 구축</li>
-            <li>유관부서가 데이터 요청 없이 자연어만으로 즉시 결합 조회할 수 있는 셀프서비스 체계 마련</li>
+            <li>매출·유입·상담·광고·기획전 5개 도메인과 외부 지표를 아우르는 54개 BigQuery 테이블을 하나의 자연어 질의 창구로 연결 (Gemini on Vertex AI · Cloud Run · GCS 메타데이터 캐시)</li>
+            <li>테이블 설명·실제 컬럼 목록·업무 용어집·과거 질문-SQL 예시를 메타데이터로 관리하고, 질문마다 필요한 테이블 설명만 골라 LLM에 전달</li>
+            <li>규칙과 LLM이 같은 테이블을 가리킬 때만 확정하는 지표 사전, 정형 질문은 LLM 없이 코드가 만드는 템플릿 SQL</li>
+            <li>SQL 실행 전 가드레일과 오류 기반 자기수정 루프, 답변 숫자의 근거 검증과 가정을 밝히는 안내 배지</li>
+            <li>동시 요청 대기열 · 사용자별 일일 조회 한도 · 비용 장부 · 감사 로그 · 골든셋 회귀 테스트로 운영 안정성 확보</li>
           </ul>
           <ul class="t-en">
-            <li>Designed an integrated data architecture spanning 5 domains: user behavior logs, consultation/ads, promotions, and public data</li>
-            <li>Built a Text-to-SQL AI chatbot structure that converts natural-language queries into SQL</li>
-            <li>Established a self-service system letting stakeholder teams run combined queries instantly via natural language, without filing data requests</li>
+            <li>Connected 54 BigQuery tables — 5 domains (sales, traffic, consultations, ads, promotions) plus external indicators — behind a single natural-language interface (Gemini on Vertex AI · Cloud Run · metadata cache on GCS)</li>
+            <li>Managed table descriptions, live column lists, a business glossary, and past question→SQL examples as metadata, sending the LLM only the descriptions of the tables each question needs</li>
+            <li>A metric dictionary that locks in a table only when rules and the LLM agree, plus code-generated template SQL for routine questions (no LLM call)</li>
+            <li>Pre-execution SQL guardrails with an error-driven self-correction loop; answers pass a number-grounding check and carry badges that disclose assumptions</li>
+            <li>Operational hardening: request queueing, per-user daily query quotas, a cost ledger, audit logs, and golden-set regression tests</li>
           </ul>
-          <figure class="diagram-card t-ko">
-            <svg viewBox="0 0 620 660" role="img" aria-label="질문이 들어오면 캐시를 먼저 확인하고, 미스면 도메인 라우팅으로 어느 프롬프트를 쓸지 정한 뒤 SQL을 생성한다. 상대적 표현에 구체적 기준이 없으면 되물어 답변을 받은 뒤 한 번만 재시도한다. 생성된 SQL은 안전 검증과 dry-run을 거치고, 실패하면 에러 메시지로 최대 2회까지 자가복구를 시도한다. 통과하면 예상 스캔량을 확인해 경고 상한을 넘으면 사용자 확인을 기다리고 하드 상한을 넘으면 차단하며, 정상이면 실행 후 캐시에 저장하고 응답한다.">
-              <defs>
-                <marker id="enable-arrow-ko" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
-                </marker>
-              </defs>
 
-              <rect x="30" y="16" width="300" height="44" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="43" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">① 질문 입력</text>
-              <line x1="180" y1="60" x2="180" y2="80" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-ko)"></line>
-
-              <rect x="30" y="84" width="300" height="56" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="108" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">② 캐시 확인</text>
-              <text x="180" y="125" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">1시간 TTL · 히트 시 즉시 응답</text>
-              <line x1="180" y1="140" x2="180" y2="160" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-ko)"></line>
-              <text x="196" y="154" font-size="9.5" fill="currentColor" opacity="0.55">캐시 미스</text>
-
-              <rect x="30" y="164" width="300" height="56" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="188" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">③ 도메인 라우팅</text>
-              <text x="180" y="205" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">LLM 라우팅 · 후보 3개 또는 미지원</text>
-              <line x1="180" y1="220" x2="180" y2="240" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-ko)"></line>
-
-              <rect x="30" y="244" width="300" height="78" rx="8" fill="var(--accent-tint)" stroke="var(--accent)" stroke-width="1.5"></rect>
-              <text x="180" y="266" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent-strong)">④ SQL 생성</text>
-              <text x="180" y="283" text-anchor="middle" font-size="9.5" fill="var(--accent-strong)" opacity="0.9">선택된 도메인 문서만 참고</text>
-              <text x="180" y="298" text-anchor="middle" font-size="9.5" fill="var(--accent-strong)" opacity="0.9">상대적 표현은 되물어 확인 후</text>
-              <text x="180" y="311" text-anchor="middle" font-size="9.5" fill="var(--accent-strong)" opacity="0.9">1회만 재시도</text>
-              <line x1="180" y1="322" x2="180" y2="342" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-ko)"></line>
-
-              <rect x="30" y="346" width="300" height="56" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="370" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">⑤ 안전 검증 + dry-run</text>
-              <text x="180" y="387" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">SELECT-only · 화이트리스트 · 예상 스캔량</text>
-
-              <path d="M 330 374 C 410 374, 410 283, 330 283" fill="none" stroke="#b5730a" stroke-width="1.3" marker-end="url(#enable-arrow-ko)"></path>
-              <text x="345" y="312" font-size="9" fill="#b5730a">실패 → 에러 메시지로</text>
-              <text x="345" y="324" font-size="9" fill="#b5730a">재생성 (최대 2회)</text>
-
-              <line x1="180" y1="402" x2="180" y2="422" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-ko)"></line>
-              <text x="196" y="416" font-size="9.5" fill="currentColor" opacity="0.55">검증 통과</text>
-
-              <rect x="30" y="426" width="300" height="62" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="452" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">⑥ 스캔량 확인</text>
-              <text x="180" y="469" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">경고·하드 상한 기준으로 판단</text>
-
-              <line x1="330" y1="440" x2="418" y2="425" stroke="#b5730a" stroke-opacity="0.8" stroke-width="1.3" marker-end="url(#enable-arrow-ko)"></line>
-              <rect x="420" y="408" width="180" height="34" rx="8" fill="#b5730a" fill-opacity="0.12" stroke="#b5730a" stroke-opacity="0.6" stroke-width="1.3"></rect>
-              <text x="510" y="429" text-anchor="middle" font-size="10" font-weight="700" fill="#b5730a">확인 대기 (경고 초과)</text>
-
-              <line x1="330" y1="472" x2="418" y2="511" stroke="#c0392b" stroke-opacity="0.8" stroke-width="1.3" marker-end="url(#enable-arrow-ko)"></line>
-              <rect x="420" y="494" width="180" height="34" rx="8" fill="#c0392b" fill-opacity="0.1" stroke="#c0392b" stroke-opacity="0.6" stroke-width="1.3"></rect>
-              <text x="510" y="515" text-anchor="middle" font-size="10" font-weight="700" fill="#c0392b">차단 (하드 초과)</text>
-
-              <line x1="180" y1="488" x2="180" y2="508" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-ko)"></line>
-              <text x="196" y="502" font-size="9.5" fill="currentColor" opacity="0.55">상한 이내</text>
-
-              <rect x="30" y="512" width="300" height="44" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="539" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">⑦ 실제 실행</text>
-              <line x1="180" y1="556" x2="180" y2="576" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-ko)"></line>
-
-              <rect x="30" y="580" width="300" height="52" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.5"></rect>
-              <text x="180" y="605" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">⑧ 캐시 저장 + 응답</text>
-              <text x="180" y="622" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">동일 질문 재요청 시 즉시 응답</text>
-            </svg>
-            <figcaption>질문이 들어오면 캐시를 먼저 확인하고, 미스면 도메인 라우팅 후 선택된 도메인 자료만 참고해 SQL을 생성합니다. 안전 검증에서 막히면 에러를 되돌려 최대 2회까지 스스로 SQL을 고치고, 통과하면 예상 스캔량을 확인해 경고 상한을 넘으면 사용자 확인을 기다리고 하드 상한을 넘으면 차단합니다. 정상 범위면 실행 후 결과를 캐시에 저장해 동일 질문은 1시간 내 즉시 응답합니다.</figcaption>
+          <h4 class="stage-sub"><span class="t-ko">질문 하나가 답이 되기까지</span><span class="t-en">From one question to one answer</span></h4>
+          <figure class="diagram-card flow-card">
+            <div class="flow-legend">
+              <span><span class="actor code t-ko">코드</span><span class="actor code t-en">Code</span><span class="t-ko">규칙 · 계산 · 검증 — 늘 같은 결과</span><span class="t-en">Rules, math, checks — same result every time</span></span>
+              <span><span class="actor llm">Gemini</span><span class="t-ko">판단 · 작성 — 표현이 다양한 부분만</span><span class="t-en">Judgment &amp; wording — only where phrasing varies</span></span>
+            </div>
+            <ol class="flow">
+              <li class="flow-step">
+                <span class="flow-num">1</span>
+                <div class="flow-head">
+                  <h5><span class="t-ko">질문 받기 · 대화 맥락</span><span class="t-en">Receive question · load context</span></h5>
+                  <div class="actors"><span class="actor code t-ko">코드</span><span class="actor code t-en">Code</span></div>
+                </div>
+                <div class="flow-body">
+                  <p class="t-ko">같은 대화의 앞 턴을 불러오고, 이어지는 질문이면 앞 답의 기간·SQL을 이어받습니다. 도움말과 "왜 줄었어?" 같은 원인 질문은 지름길로 빠져 코드가 직접 답합니다(Gemini 0회).</p>
+                  <p class="t-en">Loads earlier turns of the conversation; follow-ups inherit the previous answer's period and SQL. Help requests and "why did it drop?" questions take a shortcut and are answered by code alone (zero Gemini calls).</p>
+                </div>
+              </li>
+              <li class="flow-step">
+                <span class="flow-num">2</span>
+                <div class="flow-head">
+                  <h5><span class="t-ko">지표 사전 — 이중 확인</span><span class="t-en">Metric dictionary — double check</span></h5>
+                  <div class="actors"><span class="actor code t-ko">코드</span><span class="actor code t-en">Code</span><span class="actor llm">Gemini</span></div>
+                </div>
+                <div class="flow-body">
+                  <p class="t-ko">규칙이 질문에서 지표·나눌 기준·기간을 뽑고, Gemini도 따로 뽑습니다. 둘이 같은 테이블을 가리킬 때만 확정하고, 다르면 4단계로 넘깁니다.</p>
+                  <p class="t-en">Rules extract the metric, breakdown, and period; Gemini extracts them independently. The table is locked in only when both point to the same one — otherwise the question moves on to step 4.</p>
+                </div>
+              </li>
+              <li class="flow-step">
+                <span class="flow-num">3</span>
+                <div class="flow-head">
+                  <h5><span class="t-ko">후보 테이블 거르기</span><span class="t-en">Filter candidate tables</span></h5>
+                  <div class="actors"><span class="actor code t-ko">코드</span><span class="actor code t-en">Code</span></div>
+                </div>
+                <div class="flow-body">
+                  <p class="t-ko">권한 → 사업부 → 임베딩 유사도 순으로 후보를 40개 이하로 좁힙니다. 권한으로 뺀 테이블은 이후 어느 단계에서도 다시 들어오지 않습니다.</p>
+                  <p class="t-en">Narrows candidates by permission → business unit → embedding similarity, down to 40 or fewer. A table removed for permissions never re-enters at any later step.</p>
+                </div>
+              </li>
+              <li class="flow-step">
+                <span class="flow-num">4</span>
+                <div class="flow-head">
+                  <h5><span class="t-ko">테이블 고르기</span><span class="t-en">Pick tables</span></h5>
+                  <div class="actors"><span class="actor llm">Gemini</span></div>
+                </div>
+                <div class="flow-body">
+                  <p class="t-ko">후보 테이블의 설명을 읽고 고르거나, 되묻거나, "답할 데이터 없음"을 판정합니다. 후보에 없는 테이블 ID를 내면 버립니다.</p>
+                  <p class="t-en">Reads the candidates' descriptions and either picks tables, asks a clarifying question, or rules "no data to answer this." Any table ID not among the candidates is discarded.</p>
+                  <div class="flow-note exit"><span class="ico">↳</span><span class="t-ko">되묻기·거절이면 SQL 없이 여기서 답하고 끝납니다.</span><span class="t-en">Clarifications and refusals end here — no SQL is run.</span></div>
+                </div>
+              </li>
+              <li class="flow-step">
+                <span class="flow-num">5</span>
+                <div class="flow-head">
+                  <h5><span class="t-ko">SQL 만들기</span><span class="t-en">Write SQL</span></h5>
+                  <div class="actors"><span class="actor code t-ko">코드</span><span class="actor code t-en">Code</span><span class="actor-or t-ko">또는</span><span class="actor-or t-en">or</span><span class="actor llm">Gemini</span></div>
+                </div>
+                <div class="flow-body">
+                  <p class="t-ko">정형 질문은 코드가 템플릿으로 SQL을 만들고(Gemini 0회), 나머지는 Gemini가 씁니다. "지난주"·"최근 3개월" 같은 기간 표현은 코드가 날짜로 확정합니다.</p>
+                  <p class="t-en">Routine questions get template SQL from code (zero Gemini calls); the rest is drafted by Gemini. Phrases like "last week" or "past 3 months" are resolved to exact dates by code.</p>
+                </div>
+              </li>
+              <li class="flow-step">
+                <span class="flow-num">6</span>
+                <div class="flow-head">
+                  <h5><span class="t-ko">검사 → 실행</span><span class="t-en">Check → execute</span></h5>
+                  <div class="actors"><span class="actor code t-ko">코드</span><span class="actor code t-en">Code</span></div>
+                </div>
+                <div class="flow-body">
+                  <p class="t-ko">정적 검사 약 20종(sqlglot 파싱)과 dry-run(허용 테이블 · 스캔 20GB 상한)을 통과한 SQL만 BigQuery에서 실행합니다.</p>
+                  <p class="t-en">Only SQL that passes ~20 static checks (parsed with sqlglot) and a dry-run (allowed tables, 20 GB scan cap) is executed on BigQuery.</p>
+                  <div class="flow-note loop"><span class="ico">↺</span><span class="t-ko">걸리면 오류 문장을 Gemini에 되먹여 SQL을 고쳐 쓰게 합니다 (최대 2회)</span><span class="t-en">On failure, the error message is fed back to Gemini to rewrite the SQL (up to 2 times)</span></div>
+                </div>
+              </li>
+              <li class="flow-step">
+                <span class="flow-num">7</span>
+                <div class="flow-head">
+                  <h5><span class="t-ko">결과 점검 · 자동 비교</span><span class="t-en">Check results · auto-compare</span></h5>
+                  <div class="actors"><span class="actor code t-ko">코드</span><span class="actor code t-en">Code</span></div>
+                </div>
+                <div class="flow-body">
+                  <p class="t-ko">0건이거나 아직 적재 전이면 숫자 대신 사실대로 안내합니다. 같은 SQL을 직전 기간·작년 동기로 다시 실행해 증감률을 코드가 계산합니다.</p>
+                  <p class="t-en">Empty or not-yet-loaded results get a plain explanation instead of numbers. The same SQL is re-run for the previous period or the same period last year, and code computes the change.</p>
+                </div>
+              </li>
+              <li class="flow-step">
+                <span class="flow-num">8</span>
+                <div class="flow-head">
+                  <h5><span class="t-ko">답변 쓰기 · 숫자 검증</span><span class="t-en">Write answer · verify numbers</span></h5>
+                  <div class="actors"><span class="actor llm">Gemini</span><span class="actor-or">→</span><span class="actor code t-ko">코드</span><span class="actor code t-en">Code</span></div>
+                </div>
+                <div class="flow-body">
+                  <p class="t-ko">Gemini가 결론부터 쓴 답과 후속 질문 2개를 만들고, 코드가 답 속 숫자를 조회 결과와 대조(±1%)한 뒤 [조회 기간]·[데이터 범위]·[※ 기준] 배지를 붙입니다.</p>
+                  <p class="t-en">Gemini writes a conclusion-first answer plus two follow-up questions; code then checks every number against the query results (±1%) and attaches [Period] · [Scope] · [※ Basis] badges.</p>
+                </div>
+              </li>
+            </ol>
+            <figcaption>
+              <span class="t-ko">질문 하나에 Gemini는 보통 2~4번 불립니다. 정형 질문은 테이블·SQL·기간·비교·배지를 모두 코드가 정하고, Gemini는 지표 확인과 답 문장만 맡습니다. 보조 장치(사전·예시·캐시)가 실패하면 그 장치만 빠지고 본 흐름은 이어집니다.</span>
+              <span class="t-en">A typical question makes 2–4 Gemini calls. For routine questions, code decides the table, SQL, period, comparison, and badges — Gemini only double-checks the metric and writes the sentence. If a helper (dictionary, examples, cache) fails, only that helper drops out and the main flow continues.</span>
+            </figcaption>
           </figure>
-          <figure class="diagram-card t-en">
-            <svg viewBox="0 0 620 660" role="img" aria-label="A question first checks the cache; on a miss, domain routing picks which prompt to use, then SQL is generated. If a relative expression lacks a concrete threshold, the system asks a clarifying question and retries once after the answer. Generated SQL goes through safety validation and a dry-run; on failure, it self-repairs from the error message up to 2 times. Once it passes, estimated scan volume is checked: over the warning threshold it waits for user confirmation, over the hard limit it blocks, and otherwise it executes, caches the result, and responds.">
-              <defs>
-                <marker id="enable-arrow-en" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
-                </marker>
-              </defs>
 
-              <rect x="30" y="16" width="300" height="44" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="43" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">① Question in</text>
-              <line x1="180" y1="60" x2="180" y2="80" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-en)"></line>
+          <h4 class="stage-sub"><span class="t-ko">답변 정책 — 어떤 경우에도 지키는 것</span><span class="t-en">Answer policy — rules that always hold</span></h4>
+          <p class="stage-sub-note"><span class="t-ko">프롬프트는 "어떻게 쓸지"를, 코드는 "반드시 지켜야 할 것"을 맡습니다.</span><span class="t-en">Prompts shape how an answer is written; code enforces what must never break.</span></p>
+          <div class="policy-grid">
+            <div class="policy-card">
+              <div class="ptop"><span class="pnum">01</span><span class="pstep t-ko">적용 8단계</span><span class="pstep t-en">Applied at Step 8</span></div>
+              <h5><span class="t-ko">숫자는 조회 결과에서만</span><span class="t-en">Numbers come only from query results</span></h5>
+              <p class="t-ko">답 속 숫자를 결과 셀·합계·코드가 계산한 비교값과 대조합니다. 근거 없는 숫자가 든 문장은 다시 쓰게 하거나 지웁니다.</p>
+              <p class="t-en">Every number in an answer is matched against result cells, column totals, and code-computed comparisons. Sentences with unsupported numbers are rewritten or removed.</p>
+            </div>
+            <div class="policy-card">
+              <div class="ptop"><span class="pnum">02</span><span class="pstep t-ko">적용 5 · 8단계</span><span class="pstep t-en">Applied at Steps 5 · 8</span></div>
+              <h5><span class="t-ko">정할 수 있으면 정하고, 밝힌다</span><span class="t-en">Decide what you can — then disclose it</span></h5>
+              <p class="t-ko">기간이 없으면 최근 7일, 채널이 없으면 자사몰처럼 기본값으로 답하고, 무엇을 가정했는지 답 맨 앞 배지로 밝힙니다.</p>
+              <p class="t-en">No period? Use the last 7 days. No channel? Use the brand's own online store. Whatever was assumed is shown as a badge at the top of the answer.</p>
+            </div>
+            <div class="policy-card">
+              <div class="ptop"><span class="pnum">03</span><span class="pstep t-ko">적용 2 · 4단계</span><span class="pstep t-en">Applied at Steps 2 · 4</span></div>
+              <h5><span class="t-ko">되묻기는 갈릴 때만</span><span class="t-en">Clarify only when it truly splits</span></h5>
+              <p class="t-ko">"리하우스 방문"처럼 무엇을 세는지 자체가 갈릴 때만(웹 방문? 상담 신청? 계약?) 바로 눌러 보낼 수 있는 선택지로 되묻습니다.</p>
+              <p class="t-en">Only when what to count is genuinely split — "Rehaus visits" could mean web visits, consultation requests, or contracts — does it ask back, with one-click options.</p>
+            </div>
+            <div class="policy-card">
+              <div class="ptop"><span class="pnum">04</span><span class="pstep t-ko">적용 4 · 7단계</span><span class="pstep t-en">Applied at Steps 4 · 7</span></div>
+              <h5><span class="t-ko">모르면 모른다고</span><span class="t-en">If it can't know, it says so</span></h5>
+              <p class="t-ko">데이터 영역이 없거나 권한이 없으면 지어내지 않고 정직하게 안내합니다. 대체 지표로 답할 때는 그 사실을 밝힙니다.</p>
+              <p class="t-en">If the data doesn't exist or the user lacks access, it says so plainly instead of guessing. When it answers with a substitute metric, it says that too.</p>
+            </div>
+            <div class="policy-card">
+              <div class="ptop"><span class="pnum">05</span><span class="pstep t-ko">적용 3 · 6단계</span><span class="pstep t-en">Applied at Steps 3 · 6</span></div>
+              <h5><span class="t-ko">권한과 원본은 코드가 지킨다</span><span class="t-en">Permissions and source data are enforced in code</span></h5>
+              <p class="t-ko">허용 테이블 밖을 읽는 SQL은 실행 전에 막고, 조회(SELECT)만 허용해 원본 데이터는 절대 바꾸지 않습니다.</p>
+              <p class="t-en">SQL that touches tables outside the user's allowlist is blocked before execution, and only SELECT is allowed — source data is never modified.</p>
+            </div>
+            <div class="policy-card">
+              <div class="ptop"><span class="pnum">06</span><span class="pstep t-ko">적용 8단계</span><span class="pstep t-en">Applied at Step 8</span></div>
+              <h5><span class="t-ko">중요한 안내는 코드가 붙인다</span><span class="t-en">Critical disclosures are attached by code</span></h5>
+              <p class="t-ko">프롬프트로 "기간을 밝혀라"고 지시만 하면 절반 가까이 빠뜨렸습니다. 그래서 기간·범위·기준 배지는 코드가 직접 붙입니다.</p>
+              <p class="t-en">Told only to "state the period," the model skipped it almost half the time — so period, scope, and basis badges are attached directly by code.</p>
+            </div>
+          </div>
 
-              <rect x="30" y="84" width="300" height="56" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="108" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">② Cache check</text>
-              <text x="180" y="125" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">1-hr TTL · hit responds instantly</text>
-              <line x1="180" y1="140" x2="180" y2="160" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-en)"></line>
-              <text x="196" y="154" font-size="9.5" fill="currentColor" opacity="0.55">cache miss</text>
+          <h4 class="stage-sub"><span class="t-ko">답변은 이렇게 보입니다</span><span class="t-en">What an answer looks like</span></h4>
+          <p class="stage-sub-note"><span class="t-ko">실제 답변의 구성을 옮긴 예시입니다. 사내 수치는 가렸습니다.</span><span class="t-en">The structure of a real answer, with company figures masked.</span></p>
+          <div class="am-wrap">
+            <div class="answer-mock">
+              <div class="am-q"><span class="t-ko">지난주 제휴몰 판매금액 전주 대비 어땠어?</span><span class="t-en">How did last week's marketplace sales compare with the week before?</span></div>
+              <div class="am-badges">
+                <span class="am-badge t-ko">조회 기간: 2026-09-21 ~ 2026-09-27</span><span class="am-badge t-en">Period: 2026-09-21 ~ 2026-09-27</span>
+                <span class="am-badge t-ko">데이터 범위: 제휴몰(오픈마켓)</span><span class="am-badge t-en">Scope: third-party marketplaces</span>
+                <span class="am-badge basis t-ko">※ 데이터 없는 날: 9/24 · 9/25</span><span class="am-badge basis t-en">※ Days with no data: 9/24 · 9/25</span>
+              </div>
+              <p class="am-text t-ko">지난주 제휴몰 판매금액은 총 <span class="redact" role="img" aria-label="가린 수치">0,000,000,000</span>원으로, 직전 주 대비 ▼<span class="redact" role="img" aria-label="가린 수치">00.0</span>% 감소했습니다. 다만 9월 24·25일 데이터가 비어 있어 5일치만 집계되었고, 일평균으로 비교하면 ▲<span class="redact" role="img" aria-label="가린 수치">0.0</span>%입니다.</p>
+              <p class="am-text t-en">Last week's marketplace sales totaled ₩<span class="redact" role="img" aria-label="masked figure">0,000,000,000</span>, down ▼<span class="redact" role="img" aria-label="masked figure">00.0</span>% from the previous week. Note that 9/24 and 9/25 have no data, so only 5 days were counted — on a daily-average basis, sales were up ▲<span class="redact" role="img" aria-label="masked figure">0.0</span>%.</p>
+              <div class="am-follow">
+                <span class="t-ko">사이트별로 나눠 보면?</span><span class="t-en">Break it down by site?</span>
+                <span class="t-ko">판매수량 기준으로는?</span><span class="t-en">What about units sold?</span>
+              </div>
+              <div class="am-reason"><span class="t-ko">▸ 판단 근거 보기 — 실제로 읽은 테이블 · 답변 신뢰도 체크 · 실행한 SQL</span><span class="t-en">▸ Show reasoning — tables actually read · reliability checks · executed SQL</span></div>
+            </div>
+            <ul class="am-legend">
+              <li><b class="t-ko">배지</b><b class="t-en">Badges</b> <span class="t-ko">코드가 붙입니다. 가정한 기간·데이터 범위·기준을 숨기지 않습니다.</span><span class="t-en">Attached by code — assumed period, scope, and basis are never hidden.</span></li>
+              <li><b class="t-ko">숫자</b><b class="t-en">Numbers</b> <span class="t-ko">조회 결과와 대조되고, 증감률은 코드가 계산합니다.</span><span class="t-en">Checked against the results; changes are computed by code.</span></li>
+              <li><b class="t-ko">후속 질문 2개</b><b class="t-en">Two follow-ups</b> <span class="t-ko">실제로 답할 수 있는 데이터 범위 안에서만 제안합니다.</span><span class="t-en">Suggested only within data the system can actually answer.</span></li>
+              <li><b class="t-ko">판단 근거</b><b class="t-en">Reasoning</b> <span class="t-ko">SQL이 실제로 읽은 테이블과 자기수정 내역을 그대로 보여 줍니다.</span><span class="t-en">Shows the tables the SQL actually read and any self-corrections.</span></li>
+            </ul>
+          </div>
 
-              <rect x="30" y="164" width="300" height="56" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="188" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">③ Domain routing</text>
-              <text x="180" y="205" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">LLM routing · 3 candidates or unsupported</text>
-              <line x1="180" y1="220" x2="180" y2="240" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-en)"></line>
+          <h4 class="stage-sub"><span class="t-ko">설계 결정과 근거 (실측)</span><span class="t-en">Design decisions, backed by measurements</span></h4>
+          <table class="decision-table">
+            <thead>
+              <tr><th><span class="t-ko">겪은 문제</span><span class="t-en">What I observed</span></th><th><span class="t-ko">설계 결정</span><span class="t-en">What I changed</span></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="obs"><span class="m-label t-ko">겪은 문제</span><span class="m-label t-en">Observed</span><span class="t-ko">비슷한 테이블이 몰린 영역에서 한쪽만 믿으면 엉뚱한 테이블을 골랐습니다 — 테스트에서 규칙 단독 7건, Gemini 단독 8건 오선택</span><span class="t-en">Trusting either side alone picked the wrong table among look-alikes — 7 errors with rules only, 8 with Gemini only (test set)</span></td>
+                <td class="dec"><span class="m-label t-ko">설계 결정</span><span class="m-label t-en">Changed</span><span class="t-ko">규칙과 Gemini가 같은 결론일 때만 확정 → <b>교차 일치 시 오선택 0건</b></span><span class="t-en">Lock in a table only when rules and Gemini agree → <b>0 wrong picks when they agree</b></span></td>
+              </tr>
+              <tr>
+                <td class="obs"><span class="m-label t-ko">겪은 문제</span><span class="m-label t-en">Observed</span><span class="t-ko">되묻기를 넓히자 실패 11건 중 8건이 불필요한 되묻기였습니다</span><span class="t-en">Widening clarifications backfired — 8 of 11 failures were unnecessary questions</span></td>
+                <td class="dec"><span class="m-label t-ko">설계 결정</span><span class="m-label t-en">Changed</span><span class="t-ko">기본값으로 답하고 배지로 가정을 밝힘. 되묻기는 테이블 선택 단계에서만, 무엇을 세는지 갈릴 때만</span><span class="t-en">Answer with defaults and disclose them as badges; clarify only at table selection, only when what to count is split</span></td>
+              </tr>
+              <tr>
+                <td class="obs"><span class="m-label t-ko">겪은 문제</span><span class="m-label t-en">Observed</span><span class="t-ko">프롬프트로 "기간을 밝혀라"고 지시해도 절반 가까이 빠뜨렸습니다</span><span class="t-en">Told to "state the period," the model skipped it almost half the time</span></td>
+                <td class="dec"><span class="m-label t-ko">설계 결정</span><span class="m-label t-en">Changed</span><span class="t-ko">기간·범위·기준 안내 배지를 코드가 직접 부착</span><span class="t-en">Code attaches the period, scope, and basis badges directly</span></td>
+              </tr>
+              <tr>
+                <td class="obs"><span class="m-label t-ko">겪은 문제</span><span class="m-label t-en">Observed</span><span class="t-ko">벡터 거리로 테이블을 고르면 "리하우스 제외"가 "리하우스 포함"보다 더 가깝게 나오는 역전이 생겼습니다</span><span class="t-en">With vector distance, "excluding Rehaus (remodeling)" ranked closer than "including Rehaus" — an inversion</span></td>
+                <td class="dec"><span class="m-label t-ko">설계 결정</span><span class="m-label t-en">Changed</span><span class="t-ko">사업부는 단어 기반 구조화 필터로, 테이블 선택은 설명을 읽는 Gemini 판단으로 분리</span><span class="t-en">Business unit via a structured keyword filter; table choice by Gemini reading table descriptions</span></td>
+              </tr>
+              <tr>
+                <td class="obs"><span class="m-label t-ko">겪은 문제</span><span class="m-label t-en">Observed</span><span class="t-ko">"왜 줄었어?"를 LLM에 맡기면 상위 10개만 보거나 데이터에 없는 원인을 지어냈습니다</span><span class="t-en">Left to the LLM, "why did it drop?" looked only at the top 10 or invented causes not in the data</span></td>
+                <td class="dec"><span class="m-label t-ko">설계 결정</span><span class="m-label t-en">Changed</span><span class="t-ko">코드가 두 기간을 요인별(판매수량×단가 / 세션×전환율×객단가)로 분해해 문장까지 작성 — <b>Gemini 0회</b></span><span class="t-en">Code decomposes the two periods by factor (units × price / sessions × conversion × AOV) and writes the sentence — <b>zero Gemini calls</b></span></td>
+              </tr>
+              <tr>
+                <td class="obs"><span class="m-label t-ko">겪은 문제</span><span class="m-label t-en">Observed</span><span class="t-ko">동시 요청이 몰리면 429(요청 과다)가 쌓여 곧바로 실패했습니다</span><span class="t-en">Under concurrent load, 429 rate-limit errors piled up into immediate failures</span></td>
+                <td class="dec"><span class="m-label t-ko">설계 결정</span><span class="m-label t-en">Changed</span><span class="t-ko">Gemini 게이트 — 동시 호출 수 자동 조절, 선착순 대기, 지수 백오프 → <b>분당 약 30개 질문까지 오류 0건</b></span><span class="t-en">A Gemini gate with adaptive concurrency, first-come queueing, and exponential backoff → <b>0 errors up to ~30 questions/min</b></span></td>
+              </tr>
+            </tbody>
+          </table>
 
-              <rect x="30" y="244" width="300" height="78" rx="8" fill="var(--accent-tint)" stroke="var(--accent)" stroke-width="1.5"></rect>
-              <text x="180" y="266" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent-strong)">④ SQL generation</text>
-              <text x="180" y="283" text-anchor="middle" font-size="9.5" fill="var(--accent-strong)" opacity="0.9">References only the selected domain's docs</text>
-              <text x="180" y="298" text-anchor="middle" font-size="9.5" fill="var(--accent-strong)" opacity="0.9">Relative expressions trigger a clarifying</text>
-              <text x="180" y="311" text-anchor="middle" font-size="9.5" fill="var(--accent-strong)" opacity="0.9">question, then retry once</text>
-              <line x1="180" y1="322" x2="180" y2="342" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-en)"></line>
-
-              <rect x="30" y="346" width="300" height="56" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="370" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">⑤ Safety check + dry-run</text>
-              <text x="180" y="387" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">SELECT-only · whitelist · estimated scan bytes</text>
-
-              <path d="M 330 374 C 410 374, 410 283, 330 283" fill="none" stroke="#b5730a" stroke-width="1.3" marker-end="url(#enable-arrow-en)"></path>
-              <text x="345" y="312" font-size="9" fill="#b5730a">Failure → self-repairs from</text>
-              <text x="345" y="324" font-size="9" fill="#b5730a">the error (up to 2 tries)</text>
-
-              <line x1="180" y1="402" x2="180" y2="422" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-en)"></line>
-              <text x="196" y="416" font-size="9.5" fill="currentColor" opacity="0.55">passed</text>
-
-              <rect x="30" y="426" width="300" height="62" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="452" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">⑥ Scan-volume check</text>
-              <text x="180" y="469" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">Judged against warning &amp; hard limits</text>
-
-              <line x1="330" y1="440" x2="418" y2="425" stroke="#b5730a" stroke-opacity="0.8" stroke-width="1.3" marker-end="url(#enable-arrow-en)"></line>
-              <rect x="420" y="408" width="180" height="34" rx="8" fill="#b5730a" fill-opacity="0.12" stroke="#b5730a" stroke-opacity="0.6" stroke-width="1.3"></rect>
-              <text x="510" y="429" text-anchor="middle" font-size="9.5" font-weight="700" fill="#b5730a">Waits for confirmation</text>
-
-              <line x1="330" y1="472" x2="418" y2="511" stroke="#c0392b" stroke-opacity="0.8" stroke-width="1.3" marker-end="url(#enable-arrow-en)"></line>
-              <rect x="420" y="494" width="180" height="34" rx="8" fill="#c0392b" fill-opacity="0.1" stroke="#c0392b" stroke-opacity="0.6" stroke-width="1.3"></rect>
-              <text x="510" y="515" text-anchor="middle" font-size="10" font-weight="700" fill="#c0392b">Blocked (over hard limit)</text>
-
-              <line x1="180" y1="488" x2="180" y2="508" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-en)"></line>
-              <text x="196" y="502" font-size="9.5" fill="currentColor" opacity="0.55">within limit</text>
-
-              <rect x="30" y="512" width="300" height="44" rx="8" fill="none" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.5"></rect>
-              <text x="180" y="539" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">⑦ Execute query</text>
-              <line x1="180" y1="556" x2="180" y2="576" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.5" marker-end="url(#enable-arrow-en)"></line>
-
-              <rect x="30" y="580" width="300" height="52" rx="8" fill="none" stroke="var(--accent)" stroke-width="1.5"></rect>
-              <text x="180" y="605" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">⑧ Cache &amp; respond</text>
-              <text x="180" y="622" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65">Same question gets an instant response next</text>
-            </svg>
-            <figcaption>A question first checks the cache; on a miss, domain routing selects which reference docs to use, then SQL is generated. If safety validation fails, the error is fed back for up to 2 self-repair attempts. Once it passes, estimated scan volume is checked — over the warning threshold waits for user confirmation, over the hard limit blocks the query — and otherwise it executes, caches the result, and responds, so the same question gets an instant answer within the hour.</figcaption>
-          </figure>
           <div class="stat-row">
-            <div class="stat-tile"><span class="stat-value t-ko">반나절~1일 → 즉시</span><span class="stat-value t-en">Half a day–1 day → Instant</span><span class="stat-label t-ko">데이터 결합 조회 소요 시간</span><span class="stat-label t-en">Time to a combined-query result</span></div>
+            <div class="stat-tile"><span class="stat-value t-ko">반나절~1일 → 즉시</span><span class="stat-value t-en">½–1 day → Instant</span><span class="stat-label t-ko">데이터 결합 조회 소요 시간</span><span class="stat-label t-en">Time to a combined-query result</span></div>
+            <div class="stat-tile"><span class="stat-value">7 · 8 → 0</span><span class="stat-label t-ko">테이블 오선택 (단독 → 교차 검증, 테스트)</span><span class="stat-label t-en">Wrong-table picks, test set</span></div>
+            <div class="stat-tile"><span class="stat-value t-ko">분당 ~30 · 오류 0</span><span class="stat-value t-en">~30/min · 0 errors</span><span class="stat-label t-ko">동시 질문 처리 (부하 측정)</span><span class="stat-label t-en">Concurrent questions (load test)</span></div>
+            <div class="stat-tile"><span class="stat-value">54</span><span class="stat-label t-ko">연결된 BigQuery 테이블</span><span class="stat-label t-en">BigQuery tables connected</span></div>
           </div>
           <div class="outcome-chip-row">
-            <span class="outcome-chip t-ko">5개 도메인 데이터 통합</span><span class="outcome-chip t-en">Unified 5 data domains</span>
-            <span class="outcome-chip t-ko">자연어 기반 셀프서비스 조회</span><span class="outcome-chip t-en">Natural-language self-service queries</span>
-            <span class="outcome-chip t-ko">유관부서 데이터 접근성 강화</span><span class="outcome-chip t-en">Improved cross-team data accessibility</span>
+            <span class="outcome-chip t-ko">자연어 셀프서비스 조회</span><span class="outcome-chip t-en">Natural-language self-service</span>
+            <span class="outcome-chip t-ko">숫자 근거 검증 · 가정 명시</span><span class="outcome-chip t-en">Grounded numbers · disclosed assumptions</span>
+            <span class="outcome-chip t-ko">권한 · 비용 가드레일</span><span class="outcome-chip t-en">Permission &amp; cost guardrails</span>
+            <span class="outcome-chip t-ko">골든셋 회귀 테스트</span><span class="outcome-chip t-en">Golden-set regression tests</span>
           </div>
         </article>
 
